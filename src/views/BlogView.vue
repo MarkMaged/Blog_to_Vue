@@ -38,92 +38,41 @@
           </div>
         </div>
         <!-- Nested row for non-featured blog posts-->
-        <div class="row">
-          <div class="col-lg-6">
-            <!-- Blog post-->
-            <div class="card mb-4">
-              <a href="single.html"
-                ><img
-                  class="card-img-top"
-                  src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg"
-                  alt="..."
-              /></a>
+        <div
+          class="row col-sm-12 col-md-6 col-lg-4"
+          v-for="post in posts"
+          :key="post"
+        >
+          <!--  Start Demo Post DIV  -->
+          <div class="col">
+            <div class="card shadow-sm">
+              <img
+                src="https://via.placeholder.com/200.png/09f/fff"
+                alt="placeholder"
+              />
               <div class="card-body">
-                <div class="small text-muted">January 1, 2022</div>
-                <h2 class="card-title h4">Post Title</h2>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Reiciendis aliquid atque, nulla.
-                </p>
-                <router-link class="btn btn-primary" to="/singl"
-                  >Read more →</router-link
-                >
-              </div>
-            </div>
-            <!-- Blog post-->
-            <div class="card mb-4">
-              <a href="single.html"
-                ><img
-                  class="card-img-top"
-                  src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg"
-                  alt="..."
-              /></a>
-              <div class="card-body">
-                <div class="small text-muted">January 1, 2022</div>
-                <h2 class="card-title h4">Post Title</h2>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Reiciendis aliquid atque, nulla.
-                </p>
-                <router-link class="btn btn-primary" to="/singl"
-                  >Read more →</router-link
-                >
+                <p class="card-text">{{ post.body }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      View
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
-            <!-- Blog post-->
-            <div class="card mb-4">
-              <a href="single.html"
-                ><img
-                  class="card-img-top"
-                  src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg"
-                  alt="..."
-              /></a>
-              <div class="card-body">
-                <div class="small text-muted">January 1, 2022</div>
-                <h2 class="card-title h4">Post Title</h2>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Reiciendis aliquid atque, nulla.
-                </p>
-                <router-link class="btn btn-primary" to="/singl"
-                  >Read more →</router-link
-                >
-              </div>
-            </div>
-            <!-- Blog post-->
-            <div class="card mb-4">
-              <a href="single.html"
-                ><img
-                  class="card-img-top"
-                  src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg"
-                  alt="..."
-              /></a>
-              <div class="card-body">
-                <div class="small text-muted">January 1, 2022</div>
-                <h2 class="card-title h4">Post Title</h2>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a
-                  laboriosam.
-                </p>
-                <router-link class="btn btn-primary" to="/singl"
-                  >Read more →</router-link
-                >
-              </div>
-            </div>
-          </div>
+          <!--  End Demo Post DIV  -->
         </div>
         <!-- Pagination-->
         <nav aria-label="Pagination">
@@ -202,7 +151,21 @@
   </div>
 </template>
 <script>
+// import MainPosts from "@/components/MainPosts.vue";
 export default {
   name: "BlogPage",
+  data: () => {
+    return {
+      posts: [],
+    };
+  },
+  mounted: function () {
+    this.axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => {
+        console.log(response.data[0].title);
+        this.posts = response.data;
+      });
+  },
 };
 </script>
